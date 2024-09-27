@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=3 uid="uid://bxg4n4q2hdbms"]
+
+[sub_resource type="Animation" id="Animation_xrbhr"]
+resource_name = "idle"
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_bw5dk"]
+_data = {
+"idle": SubResource("Animation_xrbhr")
+}
+
+[node name="shadow_warrior" type="CharacterBody2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_bw5dk")
+}
