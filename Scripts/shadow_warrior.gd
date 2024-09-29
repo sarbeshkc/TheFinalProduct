@@ -5,11 +5,12 @@ class_name warrior
 @onready var state_machine = $CharacterStateMachine
 @onready var sprite = $mirror/Sprite2D
 @onready var audio_footsteps = $footstep
+@onready var audio_sword = $sword
 @onready var mirror: Node2D = $mirror
 
 func _ready() -> void:
 	state_machine.init(self)
-	
+
 func _unhandled_input(event: InputEvent) -> void:
 	state_machine.process_input(event)
 
