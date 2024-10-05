@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=3 uid="uid://bxg4n4q2hdbms"]
+[gd_scene load_steps=40 format=3 uid="uid://bxg4n4q2hdbms"]
 
 [ext_resource type="Texture2D" uid="uid://bxijddfc6wnso" path="res://Assets/SHADOW Series - The Blind Huntress/Sprite Sheet/1. Idle 48 x 48.png" id="1_0wli2"]
 [ext_resource type="Script" path="res://Scripts/shadow_warrior.gd" id="1_ml4ue"]
@@ -716,11 +716,46 @@ _data = {
 }
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_23vdl"]
-radius = 16.4924
+radius = 20.0
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_48ym4"]
 radius = 6.0
 height = 34.0
+
+[sub_resource type="FontFile" id="FontFile_mkvyh"]
+cache/0/16/0/ascent = 0.0
+cache/0/16/0/descent = 0.0
+cache/0/16/0/underline_position = 0.0
+cache/0/16/0/underline_thickness = 0.0
+cache/0/16/0/scale = 1.0
+cache/0/1/0/ascent = 0.0
+cache/0/1/0/descent = 0.0
+cache/0/1/0/underline_position = 0.0
+cache/0/1/0/underline_thickness = 0.0
+cache/0/1/0/scale = 1.0
+cache/0/2/0/ascent = 0.0
+cache/0/2/0/descent = 0.0
+cache/0/2/0/underline_position = 0.0
+cache/0/2/0/underline_thickness = 0.0
+cache/0/2/0/scale = 1.0
+cache/0/3/0/ascent = 0.0
+cache/0/3/0/descent = 0.0
+cache/0/3/0/underline_position = 0.0
+cache/0/3/0/underline_thickness = 0.0
+cache/0/3/0/scale = 1.0
+cache/0/4/0/ascent = 0.0
+cache/0/4/0/descent = 0.0
+cache/0/4/0/underline_position = 0.0
+cache/0/4/0/underline_thickness = 0.0
+cache/0/4/0/scale = 1.0
+
+[sub_resource type="Theme" id="Theme_4j3ja"]
+default_base_scale = 1.56
+default_font = SubResource("FontFile_mkvyh")
+default_font_size = 4
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_1fbdq"]
+content_margin_left = 5.0
 
 [node name="shadow_warrior" type="CharacterBody2D"]
 script = ExtResource("1_ml4ue")
@@ -802,10 +837,6 @@ stream = ExtResource("20_s4ume")
 volume_db = -20.0
 pitch_scale = 0.41
 
-[node name="HealthLabel" type="Label" parent="."]
-offset_right = 40.0
-offset_bottom = 23.0
-
 [node name="GameOverScreen" type="CanvasLayer" parent="."]
 
 [node name="GameOverLabel" type="Label" parent="GameOverScreen"]
@@ -815,5 +846,13 @@ offset_bottom = 23.0
 [node name="audio_hurt" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("20_h2nop")
 volume_db = -3.755
+
+[node name="HealthBar" type="ProgressBar" parent="."]
+offset_left = -36.0
+offset_top = -81.0
+offset_right = 37.0
+offset_bottom = -54.0
+theme = SubResource("Theme_4j3ja")
+theme_override_styles/fill = SubResource("StyleBoxEmpty_1fbdq")
 
 [connection signal="body_entered" from="mirror/HitBox" to="." method="_on_hit_box_body_entered"]

@@ -7,7 +7,10 @@ extends Entity
 @onready var audio_footsteps = $footstep
 @onready var audio_sword = $sword
 @onready var mirror: Node2D = $mirror
-@onready var health_label: Label = $HealthLabel
+
+@onready var health_progress_bar: ProgressBar = $HealthBar
+@onready var health_label: Label = $HealthBar/HealthLabel
+
 @onready var game_over_screen: CanvasLayer = $GameOverScreen
 @onready var game_over_label: Label = $GameOverScreen/GameOverLabel
 
@@ -90,16 +93,16 @@ func _process(delta: float) -> void:
 		state_machine.process_frame(delta)
 
 func update_health_display():
-	if health_label:
-		health_label.text = str(warrior_current_health) + "/" + str(warrior_max_health)
-		# Optionally, change color based on health percentage
-		var health_percentage = float(warrior_current_health) / warrior_max_health
-		if health_percentage > 0.5:
-			health_label.modulate = Color.GREEN
-		elif health_percentage > 0.25:
-			health_label.modulate = Color.YELLOW
-		else:
-			health_label.modulate = Color.RED
+	health_progress_bar.value = warrior_current_health
+	
+	# Update color based on health percentage
+	var health_percentage = float(warrior_current_health) / warrior_max_health
+	if health_percentage > 0.5:
+		health_progress_bar.modulate = Color.GREEN
+	elif health_percentage > 0.25:
+		health_progress_bar.modulate = Color.YELLOW
+	else:
+		health_progress_bar.modulate = Color.RED
 	
 	print("Current Player Health is: ", warrior_current_health)
 
@@ -141,3 +144,4 @@ func restart_game():
 	animation_player.play("respawn")  # Create this animation if it doesn't exist
 	
 	emit_signal("health_changed", warrior_current_health, warrior_max_health)
+	
