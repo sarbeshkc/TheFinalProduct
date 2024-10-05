@@ -9,13 +9,13 @@ extends State
 var dash_direction : float
 var dash_timer : float = 0.0
 var dash_tween : Tween
+@export var health_loss_on_dash: float = 4.0
 
 func _ready() -> void:
 	animation_name = "dash_1"
 
 
 func enter():
-	print("dash state running")
 	super()
 	dash_direction = Input.get_axis("left_walk", "right_walk")
 	parent.velocity.x = dash_speed * dash_direction
@@ -38,6 +38,12 @@ func process_physics(delta : float) -> State:
 	#parent.velocity.x = dash_speed * dash_direction
 	#dash_tween = create_tween()
 	#dash_tween.tween_property(parent, "velocity" ,Vector2.ZERO , 0.4)
+	
+	for i in range(parent.get_slide_collision_count()):
+		var collision = parent.get_slide_collision(i)
+		var collider = collision.get_collider()
+		if collider.is_in_group("enemies"):
+			parent.take_damage(health_loss_on_dash)
 		
 	parent.move_and_slide()
 	

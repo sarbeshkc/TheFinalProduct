@@ -15,9 +15,17 @@ run/main_scene="res://Sceans/start.tscn"
 config/features=PackedStringArray("4.3", "Forward Plus")
 config/icon="res://icon.svg"
 
+[autoload]
+
+CombatController="*res://Global/CombatController.gd"
+
 [display]
 
 window/stretch/scale=3.0
+
+[global_group]
+
+enemies=""
 
 [input]
 

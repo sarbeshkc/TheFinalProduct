@@ -12,7 +12,6 @@ func _ready() -> void:
 	animation_name = "jump"
 
 func enter():
-	print("jump is running")
 	super()
 	parent.velocity.y = jump_velocity
 

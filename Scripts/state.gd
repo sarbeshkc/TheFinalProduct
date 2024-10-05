@@ -9,7 +9,6 @@ extends  Node
 var parent : warrior
 
 func enter() -> void:
-	print("state machine")
 	if animation_name:
 		parent.animation_player.play(animation_name)
 

@@ -9,7 +9,6 @@ func _ready() -> void:
 	animation_name = "run"
 	
 func enter():
-	print("run state")
 	super()
 	parent.audio_footsteps.play()
 	
