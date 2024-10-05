@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=3 uid="uid://bxg4n4q2hdbms"]
+[gd_scene load_steps=37 format=3 uid="uid://bxg4n4q2hdbms"]
 
 [ext_resource type="Texture2D" uid="uid://bxijddfc6wnso" path="res://Assets/SHADOW Series - The Blind Huntress/Sprite Sheet/1. Idle 48 x 48.png" id="1_0wli2"]
 [ext_resource type="Script" path="res://Scripts/shadow_warrior.gd" id="1_ml4ue"]
@@ -18,6 +18,7 @@
 [ext_resource type="Script" path="res://Scripts/fall.gd" id="15_yxnmf"]
 [ext_resource type="Script" path="res://Scripts/attack.gd" id="16_kyvmg"]
 [ext_resource type="AudioStream" uid="uid://b1gm2vou6ywn1" path="res://audio/concrete-footsteps-6752.mp3" id="17_xj5ui"]
+[ext_resource type="AudioStream" uid="uid://c6khc4d51dp40" path="res://audio/retro-hurt-2-236675.mp3" id="20_h2nop"]
 [ext_resource type="AudioStream" uid="uid://dkn4st2vy3j54" path="res://audio/sword-slash-and-swing-185432.mp3" id="20_s4ume"]
 
 [sub_resource type="Animation" id="Animation_bh7w5"]
@@ -810,5 +811,9 @@ offset_bottom = 23.0
 [node name="GameOverLabel" type="Label" parent="GameOverScreen"]
 offset_right = 40.0
 offset_bottom = 23.0
+
+[node name="audio_hurt" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("20_h2nop")
+volume_db = -3.755
 
 [connection signal="body_entered" from="mirror/HitBox" to="." method="_on_hit_box_body_entered"]

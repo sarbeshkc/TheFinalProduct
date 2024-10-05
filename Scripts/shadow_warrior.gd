@@ -10,11 +10,17 @@ extends Entity
 @onready var health_label: Label = $HealthLabel
 @onready var game_over_screen: CanvasLayer = $GameOverScreen
 @onready var game_over_label: Label = $GameOverScreen/GameOverLabel
+
 @export var damage: float = 20
+
+
 var isHurt : bool = false
 var isDead : bool = false
+
+
 @export var warrior_max_health : int = 100
 @onready var warrior_current_health : int = warrior_max_health
+@onready var audio_hurt: AudioStreamPlayer2D = $audio_hurt
 
 func _ready() -> void:
 	super()
@@ -32,6 +38,9 @@ func take_damage(amount: float) -> void:
 	super(amount)
 	isHurt = true
 	animation_player.play("hurt")
+	if audio_hurt and not audio_hurt.playing:
+		audio_hurt.play()
+
 	warrior_current_health = max(0, warrior_current_health - amount)
 	update_health_display()
 	emit_signal("health_changed", warrior_current_health, warrior_max_health)
@@ -47,19 +56,23 @@ func die():
 		return  # Prevent multiple death calls
 	
 	isDead = true
+	
+	# Play death animation
+
 	animation_player.play("death_warrior")
+	
 	# Disable controls and collision
 	set_physics_process(false)
 	set_process_input(false)
 	$CollisionShape2D.set_deferred("disabled", true)
 	
-	# Wait for the death animation to finish
+
 	await animation_player.animation_finished
-	
 	# Trigger game over
 	trigger_game_over()
 
 func trigger_game_over():
+	animation_player.play("death_warrior")
 	game_over_label.text = "Game Over"
 	game_over_screen.show()
 	# You might want to add a retry button or return to main menu option here
