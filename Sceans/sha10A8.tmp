@@ -1,4 +1,4 @@
-[gd_scene load_steps=41 format=3 uid="uid://bxg4n4q2hdbms"]
+[gd_scene load_steps=40 format=3 uid="uid://bxg4n4q2hdbms"]
 
 [ext_resource type="Texture2D" uid="uid://bxijddfc6wnso" path="res://Assets/SHADOW Series - The Blind Huntress/Sprite Sheet/1. Idle 48 x 48.png" id="1_0wli2"]
 [ext_resource type="Script" path="res://Scripts/shadow_warrior.gd" id="1_ml4ue"]
@@ -20,7 +20,6 @@
 [ext_resource type="AudioStream" uid="uid://b1gm2vou6ywn1" path="res://audio/concrete-footsteps-6752.mp3" id="17_xj5ui"]
 [ext_resource type="AudioStream" uid="uid://c6khc4d51dp40" path="res://audio/retro-hurt-2-236675.mp3" id="20_h2nop"]
 [ext_resource type="AudioStream" uid="uid://dkn4st2vy3j54" path="res://audio/sword-slash-and-swing-185432.mp3" id="20_s4ume"]
-[ext_resource type="PackedScene" uid="uid://86xejbq12jao" path="res://Sceans/game_over.tscn" id="21_mcrbo"]
 
 [sub_resource type="Animation" id="Animation_bh7w5"]
 length = 0.001
@@ -760,6 +759,9 @@ content_margin_left = 5.0
 
 [node name="shadow_warrior" type="CharacterBody2D"]
 script = ExtResource("1_ml4ue")
+damage = null
+warrior_max_health = null
+max_health = null
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -838,6 +840,12 @@ stream = ExtResource("20_s4ume")
 volume_db = -20.0
 pitch_scale = 0.41
 
+[node name="GameOverScreen" type="CanvasLayer" parent="."]
+
+[node name="GameOverLabel" type="Label" parent="GameOverScreen"]
+offset_right = 40.0
+offset_bottom = 23.0
+
 [node name="audio_hurt" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("20_h2nop")
 volume_db = -3.755
@@ -849,7 +857,5 @@ offset_right = 37.0
 offset_bottom = -54.0
 theme = SubResource("Theme_4j3ja")
 theme_override_styles/fill = SubResource("StyleBoxEmpty_1fbdq")
-
-[node name="GameOverScreen" parent="." instance=ExtResource("21_mcrbo")]
 
 [connection signal="body_entered" from="mirror/HitBox" to="." method="_on_hit_box_body_entered"]

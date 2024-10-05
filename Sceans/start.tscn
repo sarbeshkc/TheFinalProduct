@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=4 uid="uid://ck3y6t2lbkr63"]
+[gd_scene load_steps=11 format=4 uid="uid://ck3y6t2lbkr63"]
 
 [ext_resource type="PackedScene" uid="uid://bxg4n4q2hdbms" path="res://Sceans/shadow_warrior.tscn" id="1_7qd6x"]
 [ext_resource type="Script" path="res://Scripts/start.gd" id="1_bjmk0"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://blkw4f3ltcpcd" path="res://Assets/Dead Tileset V3.png" id="3_u0ury"]
 [ext_resource type="AudioStream" uid="uid://togkr71lfmmj" path="res://audio/good-guitar-191443.mp3" id="4_scqq5"]
 [ext_resource type="PackedScene" uid="uid://dll4ncwxgjqut" path="res://Sceans/emeny_1.tscn" id="6_yibh7"]
+[ext_resource type="PackedScene" uid="uid://86xejbq12jao" path="res://Sceans/game_over.tscn" id="7_owlsy"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_tj0tx"]
 texture = ExtResource("2_2cv37")
@@ -103,19 +104,15 @@ rotation_smoothing_enabled = true
 drag_horizontal_enabled = true
 
 [node name="emeny_2" parent="." instance=ExtResource("6_yibh7")]
-position = Vector2(401, 261)
+position = Vector2(489, 261)
 
 [node name="emeny_1" parent="." instance=ExtResource("6_yibh7")]
-position = Vector2(114, 261)
+position = Vector2(-158, 260)
 
 [node name="emeny_3" parent="." instance=ExtResource("6_yibh7")]
 position = Vector2(842, 194)
 
-[node name="emeny_4" parent="." instance=ExtResource("6_yibh7")]
-position = Vector2(967, 133)
-
 [node name="emeny_5" parent="." instance=ExtResource("6_yibh7")]
 position = Vector2(1074, 170)
 
-[node name="emeny_6" parent="." instance=ExtResource("6_yibh7")]
-position = Vector2(-55, 258)
+[node name="GameOverScreen" parent="." instance=ExtResource("7_owlsy")]

@@ -1,6 +1,6 @@
 [gd_scene load_steps=27 format=3 uid="uid://dll4ncwxgjqut"]
 
-[ext_resource type="Script" path="res://Sceans/emeny_1.gd" id="1_a7oxe"]
+[ext_resource type="Script" path="res://Scripts/emeny_1.gd" id="1_a7oxe"]
 [ext_resource type="Texture2D" uid="uid://c1kyeoqybquq3" path="res://Assets/smile_individual sprite/slime-attack-0.png" id="1_mj1wo"]
 [ext_resource type="Texture2D" uid="uid://bhrfshb03wysw" path="res://Assets/smile_individual sprite/slime-idle-0.png" id="1_qbrnb"]
 [ext_resource type="Texture2D" uid="uid://bom0xwadeh1ba" path="res://Assets/smile_individual sprite/slime-idle-1.png" id="2_0ikvj"]

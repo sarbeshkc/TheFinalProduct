@@ -9,7 +9,8 @@ extends Entity
 @onready var mirror: Node2D = $mirror
 
 @onready var health_progress_bar: ProgressBar = $HealthBar
-@onready var health_label: Label = $HealthBar/HealthLabel
+
+
 
 @onready var game_over_screen: CanvasLayer = $GameOverScreen
 @onready var game_over_label: Label = $GameOverScreen/GameOverLabel
@@ -32,7 +33,7 @@ func _ready() -> void:
 	state_machine.init(self)
 	update_health_display()
 	emit_signal("health_changed", current_health, max_health)
-	game_over_screen.hide()  # Ensure the game over screen is hidden at start
+	#game_over_screen.hide()  # Ensure the game over screen is hidden at start
 
 func take_damage(amount: float) -> void:
 	if isDead:
