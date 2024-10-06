@@ -1,5 +1,5 @@
 # A global function to manage combact mechaniam
-
+# CombactController.gd
 extends Node
 
 signal damage_delt(attacker, target, amount)
