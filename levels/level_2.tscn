@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://7f8ng3xwry3w"]
+
+[ext_resource type="Texture2D" uid="uid://c1kyeoqybquq3" path="res://Assets/smile_individual sprite/slime-attack-0.png" id="1_66her"]
+
+[node name="level_2" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_66her")
+
+[node name="Camera2D" type="Camera2D" parent="Sprite2D"]

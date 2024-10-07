@@ -7,79 +7,69 @@ extends Entity
 @onready var audio_footsteps = $footstep
 @onready var audio_sword = $sword
 @onready var mirror: Node2D = $mirror
-
-@onready var health_progress_bar: ProgressBar = $HealthBar
-
-
-
-@onready var game_over_screen: CanvasLayer = $GameOverScreen
-@onready var game_over_label: Label = $GameOverScreen/GameOverLabel
+@onready var health_bar: ProgressBar = $CanvasLayer/HealthBar
+@onready var audio_hurt: AudioStreamPlayer2D = $audio_hurt
 
 @export var damage: float = 20
-
+@export var warrior_max_health : int = 100
 
 var isHurt : bool = false
 var isDead : bool = false
-
-
-@export var warrior_max_health : int = 100
-@onready var warrior_current_health : int = warrior_max_health
-@onready var audio_hurt: AudioStreamPlayer2D = $audio_hurt
+var warrior_current_health : int
 
 func _ready() -> void:
 	super()
-	max_health = warrior_max_health
-	current_health = max_health
+	warrior_current_health = warrior_max_health
+	health_bar.init_health(warrior_max_health)
 	state_machine.init(self)
-	update_health_display()
-	emit_signal("health_changed", current_health, max_health)
-	#game_over_screen.hide()  # Ensure the game over screen is hidden at start
+	emit_signal("health_changed", warrior_current_health, warrior_max_health)
+	
+	#set_collision_layer(0)  # Set player to layer 1
+	#set_collision_mask(1)   # Allow player to interact with layer 2 (enemy)
+	
+	#if not attack_raycast:
+		#attack_raycast = RayCast2D.new()
+		#add_child(attack_raycast)
+	#attack_raycast.enabled = false
+	#attack_raycast.collision_mask = 2  # Assuming enemy is on layer 2
 
 func take_damage(amount: float) -> void:
 	if isDead:
-		return  # Don't take damage if already dead
-	
-	super(amount)
-	isHurt = true
-	animation_player.play("hurt")
-	if audio_hurt and not audio_hurt.playing:
-		audio_hurt.play()
+		return
 
 	warrior_current_health = max(0, warrior_current_health - amount)
-	update_health_display()
+	health_bar.value = warrior_current_health
 	emit_signal("health_changed", warrior_current_health, warrior_max_health)
 	
+	print("Player took damage. Current health: ", warrior_current_health)
+
 	if warrior_current_health <= 0:
 		die()
+	else:
+		isHurt = true
+		animation_player.play("hurt")
+		if Input.is_action_pressed("left_walk") or Input.is_action_pressed("right_walk"):
+			pass
+		if audio_hurt and not audio_hurt.playing:
+			audio_hurt.play()
 
 func get_attack_damage():
-	return 10
+	return damage
+
 
 func die():
+	# Being safe, if die fuction is called by mistake
 	if isDead:
-		return  # Prevent multiple death calls
+		return
 	
 	isDead = true
-	
-	# Play death animation
-
 	animation_player.play("death_warrior")
-	
-	# Disable controls and collision
+	# Removing collision shape and input
 	set_physics_process(false)
 	set_process_input(false)
 	$CollisionShape2D.set_deferred("disabled", true)
-	
 
-	await animation_player.animation_finished
-	# Trigger game over
-	trigger_game_over()
 
-func trigger_game_over():
-	animation_player.play("death_warrior")
-	game_over_label.text = "Game Over"
-	game_over_screen.show()
-	# You might want to add a retry button or return to main menu option here
 
 func _unhandled_input(event: InputEvent) -> void:
 	if not isDead:
@@ -92,57 +82,21 @@ func _physics_process(delta: float) -> void:
 func _process(delta: float) -> void:
 	if not isDead:
 		state_machine.process_frame(delta)
-
-func update_health_display():
-	health_progress_bar.value = warrior_current_health
-	
-	# Update color based on health percentage
-	var health_percentage = float(warrior_current_health) / warrior_max_health
-	if health_percentage > 0.5:
-		health_progress_bar.modulate = Color.GREEN
-	elif health_percentage > 0.25:
-		health_progress_bar.modulate = Color.YELLOW
-	else:
-		health_progress_bar.modulate = Color.RED
-	
-	print("Current Player Health is: ", warrior_current_health)
-
-func _on_area_2d_body_entered(body):
-	if body is enemy and not isDead:
-		body.take_damage(damage)
-
-func _on_hit_box_body_entered(body: Node2D) -> void:
-	if body is enemy and not isDead:
-		body.take_damage(damage)
-
-func heal(amount: float) -> void:
-	if isDead:
-		return  # Can't heal if dead
-	
-	warrior_current_health = min(warrior_current_health + amount, warrior_max_health)
-	update_health_display()
-	emit_signal("health_changed", warrior_current_health, warrior_max_health)
-
-# New function to restart the game
-func restart_game():
-	# Reset warrior's state
+		
+func respawn() -> void:
 	isDead = false
 	warrior_current_health = warrior_max_health
-	update_health_display()
-	
-	# Re-enable physics and input
 	set_physics_process(true)
 	set_process_input(true)
-	$CollisionShape2D.set_deferred("disabled", false)
-	
-	# Hide game over screen
-	game_over_screen.hide()
-	
-	# Reset position (adjust as needed)
-	global_position = Vector2.ZERO
-	
-	# Play respawn animation if you have one
-	animation_player.play("respawn")  # Create this animation if it doesn't exist
-	
+	$CollisionShape2D.set_deferred("disabled", false) 
+	global_position= Vector2.ZERO
+	animation_player.play("fall")
 	emit_signal("health_changed", warrior_current_health, warrior_max_health)
 	
+
+
+func _on_hit_box_body_entered(body: Node2D) -> void:
+	print("FUnction executed")
+	if body is enemy:
+		print("Enemy hit player")
+		body.take_damage(damage)

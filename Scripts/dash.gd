@@ -9,7 +9,8 @@ extends State
 var dash_direction : float
 var dash_timer : float = 0.0
 var dash_tween : Tween
-@export var health_loss_on_dash: float = 4.0
+@export var health_loss_on_dash: float = 1.0
+
 
 func _ready() -> void:
 	animation_name = "dash_1"

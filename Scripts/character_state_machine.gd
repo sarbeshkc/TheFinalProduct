@@ -1,3 +1,4 @@
+# character_state_machine.gd
 extends Node
 
 @export var starting_state : State
